@@ -6,6 +6,8 @@ require live observation to confirm; none affect building against the documented
 **Machine-usable companions:**
 - `catalog/message-spec.json` — message catalog: 2,851 records, 15,963 members,
  wire names final (transportName overrides applied), request/response typed
+- `catalog/soap-commands.txt` — 109 legacy SOAP operation URNs (ECF facade transport)
+- `docs/catalog-format.md` — how to read the message catalog
 - `catalog/capability-list.txt` — 388 `HaikuCapability` wire values
 - Detail docs: `transport-protocol.md`, `auth-flow.md`, `org-discovery.md`, `security-webview-push.md`
 
@@ -127,7 +129,7 @@ Content-Type: application/soap+xml; charset=utf-8
  operation element attribute); the token arrives inside `ECFLogin$Response.SessionInfo.Token`.
 - Faults: `soap:Fault` →
  `faultcode`/`faultstring`/`detail>(applicationfault|internalfault @type)`.
-- 150 cataloged URNs, `EpicOnHand.2007-07` … `2016` namespaces.
+- 109 cataloged operations across two namespaces, `EpicOnHand.2007-07` … `2016` and `Handheld.2012/2013-05` (see `catalog/soap-commands.txt`).
 
 ## 3. HTTP headers (all command requests)
 
@@ -183,7 +185,8 @@ wire. 🔴 Live observation against a real server must settle this.
 3. `Epic.Mobile.Core.Authentication.Login` wizard (`ECFLoginWizard$Request{CurrentStep,
  Workflow, …}`) — repeat per step (2FA, ChangePassword, job/department): carries
  `ECFLogin$Request{LoginID, EncryptedPassword/PasswordIV/EncryptedAESKey
- (RSA-OAEP vs PreLogin PublicKey), AuthToken+TokenType (ID|PIN|BiometricRefresh),
+ (AES-128-CBC/PKCS5 password; AES key RSA-OAEP-SHA1-wrapped vs PreLogin PublicKey, IV in the
+ clear — exact construction in auth-flow.md), AuthToken+TokenType (ID|PIN|BiometricRefresh),
  Device/App/Locale/TimeZone/SystemInfo, OpenIDConnectCredential?}`.
 4. `ECFLogin$Response` → `SessionInfo.Token` (+timeout) = Interconnect session token;
  biometric `RefreshToken`; `CheckPINToken`; `VinzInfo`; `UserInfo`; `ServerInfo`.

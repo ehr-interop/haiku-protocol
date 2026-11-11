@@ -1,0 +1,234 @@
+# Legacy SOAP command URNs (ECF facade transport)
+#
+# Each line is a full operation URN as POSTed to <base>/httplistener.ashx:
+#   - operation element name = last dot-segment of the URN
+#   - default XML namespace   = URN minus the last segment
+#   - no SOAPAction header is sent (action-less SOAP 1.2)
+# Two namespaces are used: EpicOnHand.* (106 operations) and Handheld.* (3).
+# Grouped by service area (each line keeps the URN's protocol-version segment).
+# Modern servers accept the equivalent Epic.Mobile.* JSON Web API commands
+# (see catalog/message-spec.json).
+
+
+# AcceptBTG
+urn:epicsystems-com:EpicOnHand.2011-08.Services.PatientManager.AcceptBTG
+
+# Blood
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.Blood.InitBloodCtrl
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.Blood.LookupOrdRes
+
+# CancelBTG
+urn:epicsystems-com:EpicOnHand.2011-08.Services.PatientManager.CancelBTG
+
+# CheckAnswers
+urn:epicsystems-com:EpicOnHand.2014.Services.Login.CheckAnswers
+
+# CheckPatient
+urn:epicsystems-com:EpicOnHand.2010-03.Services.PatientManager.CheckPatient
+
+# CheckUserLogin
+urn:epicsystems-com:EpicOnHand.2014.Services.Login.CheckUserLogin
+
+# ClassSearch
+urn:epicsystems-com:EpicOnHand.2010-01.Services.InBasket.ClassSearch
+
+# CompleteRxRequestAction
+urn:epicsystems-com:Handheld.2012.Services.InBasket.CompleteRxRequestAction
+urn:epicsystems-com:Handheld.2013-05.Services.InBasket.CompleteRxRequestAction
+
+# CreatePatient
+urn:epicsystems-com:EpicOnHand.2011-04.Services.PatientManager.CreatePatient
+
+# CreatePatientWithPhoto
+urn:epicsystems-com:EpicOnHand.2011-04.Services.PatientManager.CreatePatientWithPhoto
+
+# EditPatientList
+urn:epicsystems-com:EpicOnHand.2011-04.Services.PatientManager.EditPatientList
+
+# FindPatient
+urn:epicsystems-com:EpicOnHand.2010-01.Services.PatientManager.FindPatient
+
+# Flowsheets
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.Flowsheets.GetFlowsheet
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.Flowsheets.GetFlowsheetsSettings
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.Flowsheets.GetMiniFlowsheet
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.Flowsheets.SaveFlowsheetData
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.Flowsheets.SaveNote
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.Flowsheets.SuspectHtWt
+urn:epicsystems-com:EpicOnHand.2016.Services.Rover.Flowsheets.GetFlowsheetRowDefinitions
+urn:epicsystems-com:EpicOnHand.2016.Services.Rover.Flowsheets.GetSettingsAndFloIDs
+urn:epicsystems-com:EpicOnHand.2016.Services.Rover.Flowsheets.SaveDeviceData
+
+# GenerateIntegrationLink
+urn:epicsystems-com:EpicOnHand.2013-06.Services.ClinicalReview.GenerateIntegrationLink
+
+# GetCESummaryEC
+urn:epicsystems-com:EpicOnHand.2011-05.Services.ClinicalReview.GetCESummaryEC
+
+# GetCommentsForResult
+urn:epicsystems-com:EpicOnHand.2011-01.Services.InBasket.GetCommentsForResult
+
+# GetDataForReplyToPatient
+urn:epicsystems-com:EpicOnHand.2011-05.Services.InBasket.GetDataForReplyToPatient
+
+# GetList
+urn:epicsystems-com:EpicOnHand.2010-01.Services.ClinicalReview.GetList
+urn:epicsystems-com:EpicOnHand.2010-12.Services.ClinicalReview.GetList
+
+# GetListPatients
+urn:epicsystems-com:EpicOnHand.2008-05.Services.PatientManager.GetListPatients
+
+# GetMedList
+urn:epicsystems-com:EpicOnHand.2013-03.Services.OrderEntry.GetMedList
+
+# GetMediaByName
+urn:epicsystems-com:EpicOnHand.2011-05.Services.Binary.GetMediaByName
+
+# GetPatientLists
+urn:epicsystems-com:EpicOnHand.2010-01.Services.PatientManager.GetPatientLists
+
+# GetPatientPhotoWithSize
+urn:epicsystems-com:EpicOnHand.2010-01.Services.Binary.GetPatientPhotoWithSize
+
+# GetPatientStatus
+urn:epicsystems-com:EpicOnHand.2012-06.Services.PatientManager.GetPatientStatus
+
+# GetQuestions
+urn:epicsystems-com:EpicOnHand.2014.Services.Login.GetQuestions
+
+# GetRecentPatients
+urn:epicsystems-com:EpicOnHand.2010-01.Services.PatientManager.GetRecentPatients
+
+# GetReportHTML
+urn:epicsystems-com:EpicOnHand.2010-01.Services.ClinicalReview.GetReportHTML
+urn:epicsystems-com:EpicOnHand.2011-04.Services.ClinicalReview.GetReportHTML
+
+# GetResultRelDetails
+urn:epicsystems-com:EpicOnHand.2011-01.Services.InBasket.GetResultRelDetails
+
+# GetResultsTable
+urn:epicsystems-com:EpicOnHand.2010-01.Services.ClinicalReview.GetResultsTable
+
+# GetSSNInfo
+urn:epicsystems-com:EpicOnHand.2011-04.Services.PatientManager.GetSSNInfo
+
+# GetScannedPatient
+urn:epicsystems-com:EpicOnHand.2012-06.Services.PatientManager.GetScannedPatient
+
+# GetSchedule
+urn:epicsystems-com:EpicOnHand.2007-07.Services.PatientManager.GetSchedule
+
+# GetSearchCosigner
+urn:epicsystems-com:EpicOnHand.2010-01.Services.OrderEntry.GetSearchCosigner
+
+# GetSearchFreqs
+urn:epicsystems-com:EpicOnHand.2010-01.Services.OrderEntry.GetSearchFreqs
+
+# GetSettings
+urn:epicsystems-com:EpicOnHand.2010-01.Services.PatientManager.GetSettings
+
+# GetStaffMessages
+urn:epicsystems-com:EpicOnHand.2010-01.Services.InBasket.GetStaffMessages
+
+# ImportPatientClinicalFile
+urn:epicsystems-com:EpicOnHand.2012-02.Services.MediaManager.ImportPatientClinicalFile
+
+# Interactions
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.Interactions.CheckAlerts
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.Interactions.GetRxAlertInformation
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.Interactions.SaveOverrideInformation
+
+# KeepAlive
+urn:epicsystems-com:EpicOnHand.2010.Services.Login.KeepAlive
+
+# Lab
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.Lab.DeferDraw
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.Lab.GetSettings
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.Lab.LoadAddOnSpecimens
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.Lab.LoadOrders
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.Lab.PrintLabels
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.Lab.Redraw
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.Lab.SaveAddOn
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.Lab.SaveCollection
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.Lab.TakePutBack
+
+# LoadAlternativeDescription
+urn:epicsystems-com:EpicOnHand.2016.Services.OrderEntry.LoadAlternativeDescription
+
+# LoadOrdersForUserAction
+urn:epicsystems-com:Handheld.2012.Services.InBasket.LoadOrdersForUserAction
+
+# LoadResultNoteSettings
+urn:epicsystems-com:EpicOnHand.2012-03.Services.InBasket.LoadResultNoteSettings
+
+# Logout
+urn:epicsystems-com:EpicOnHand.2009-08.Services.Login.Logout
+
+# MAR
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.MAR.CalculateDoseFromRate
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.MAR.CalculateRateFromDose
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.MAR.CheckCumulativeDose
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.MAR.DateTimeChanged
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.MAR.GetDetailsReport
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.MAR.LoadMAR
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.MAR.LoadPreAdminData
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.MAR.LoadTimeline
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.MAR.LogBPA
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.MAR.MatchMedicationBarcode
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.MAR.MatchPatientBarcode
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.MAR.PreSaveCheck
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.MAR.RNVerify
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.MAR.RemoveAdmins
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.MAR.SaveALT
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.MAR.SaveAdminInstrViewed
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.MAR.SaveMAR
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.MAR.SendRxMessage
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.MAR.ValidateImmunizationNDC
+
+# MapUserBarcodeToLoginInfo
+urn:epicsystems-com:EpicOnHand.2014.Services.Login.MapUserBarcodeToLoginInfo
+
+# PatientsTaken
+urn:epicsystems-com:EpicOnHand.2014.Services.Lab.PatientsTaken
+
+# Printing
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.Printing.GetPrinterList
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.Printing.PrintGenericPatientLabel
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.Printing.PrinterLookup
+
+# ReleaseResults
+urn:epicsystems-com:EpicOnHand.2011-01.Services.InBasket.ReleaseResults
+
+# SaveResultNote
+urn:epicsystems-com:EpicOnHand.2012-03.Services.InBasket.SaveResultNote
+
+# SendMsg
+urn:epicsystems-com:EpicOnHand.2010-01.Services.InBasket.SendMsg
+
+# SendReplyToPatient
+urn:epicsystems-com:EpicOnHand.2011-05.Services.InBasket.SendReplyToPatient
+
+# SetPatientPhoto
+urn:epicsystems-com:EpicOnHand.2010-01.Services.Binary.SetPatientPhoto
+
+# TaskList
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.TaskList.CheckForOrderUpdates
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.TaskList.CheckSpecimenSource
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.TaskList.ClearMSOrders
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.TaskList.CompTask
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.TaskList.CreateMSOrders
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.TaskList.InitTaskList
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.TaskList.LoadSpecimenCollection
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.TaskList.LoadTasks
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.TaskList.PreSaveChecks
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.TaskList.SaveALT
+urn:epicsystems-com:EpicOnHand.2014.Services.Rover.TaskList.SaveMSOrders
+
+# UserSearch
+urn:epicsystems-com:EpicOnHand.2010-01.Services.InBasket.UserSearch
+
+# urn:epicsystems-com:EpicOnHand.2011-03.Services.InBasket
+urn:epicsystems-com:EpicOnHand.2011-03.Services.InBasket
+
+# urn:epicsystems-com:EpicOnHand.2013-12.Services.InBasket
+urn:epicsystems-com:EpicOnHand.2013-12.Services.InBasket

@@ -144,9 +144,8 @@ Decision tree in `h.beginWork`:
  app/installation secret from Haiku configuration); *uncertainty: exact semantics — this is the
  only place the field name appears; it is always.e(this.b), i.e. the connection-profile field.*
  - `SelectedTemplateID`, (builder `.p(skipJobSelectionUpdateStatus)` on non-wizard path)
- - `EncryptedPassword`, `PasswordIV`, `EncryptedAESKey` — produced by
- `builder.n(passwordChars, publicKey)` when a password is present (public-key/AES hybrid
- encryption against the server-provided `PublicKey`; password buffer zeroed afterwards),
+ - `EncryptedPassword`, `PasswordIV`, `EncryptedAESKey` — the password envelope, built when a
+ password is present (exact construction below; password buffer zeroed afterwards),
  - `AuthToken` + derived `TokenType` — one of `ID` (OIDC ID token), `PIN`
  (`Epic2FA`/`LDAP` normalized to `PIN`), or default `BiometricRefresh` when none supplied;
  `RefreshToken` getter = the raw token string.
@@ -365,8 +364,19 @@ and `INVALID-AUTH-TOKEN` → `NotAuthorized`; the client then surfaces re-authen
  (`EpicOAuth2Login`, `CreateSession`) — everything else is the session-token header.
 - `Epic-Client-Time`/`Interconnect_ClientTime` sync and `INVALID-CLIENT-TIME` faults mean clock skew
  matters (server validates client time).
-- Passwords are never sent in clear: RSA/AES-hybrid encryption against the PreLogin `PublicKey`
- (`EncryptedPassword`, `PasswordIV`, `EncryptedAESKey`); buffer zeroed in-memory.
+- Passwords are never sent in clear: hybrid RSA/AES encryption against the PreLogin `PublicKey`
+ (exact construction below); buffer zeroed in-memory.
+- **Password envelope** (`EncryptedPassword` / `PasswordIV` / `EncryptedAESKey`, all Base64):
+ when the server supplies an RSA public key (PEM) in the PreLogin response, a random
+ 16-byte AES-128 key and 16-byte IV are generated (`SecureRandom`);
+ `EncryptedPassword` = Base64(AES-128-CBC/PKCS5Padding(UTF-8(password), key, IV));
+ `EncryptedAESKey` = Base64(RSA-OAEP-with-SHA-1-and-MGF1-SHA1(key, server public key))
+ (`RSA/ECB/OAEPwithSHA-1andMGF1Padding`; the public key is parsed from its PEM
+ modulus/exponent); `PasswordIV` = Base64(IV) — the IV travels **in the clear**, only the
+ AES key is RSA-wrapped. Legacy fallback when no public key is present: `EncryptedPassword` =
+ Base64(AES-128-CBC/PKCS5Padding(UTF-8(password), key = 16 zero bytes, IV = 16 zero bytes));
+ `PasswordIV`/`EncryptedAESKey` are omitted — the same fixed-key AES-128-CBC construction
+ as the legacy "Epic Scramble" family used for econfig payloads.
 - The MFL and OIDC flows both reduce to PKCE authorization-code exchanges; the redirect URIs to
  register for a clone are `com.epic.haiku.oidc://callback` and the mobile.epic.com universal link.
 

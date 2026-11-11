@@ -40,7 +40,7 @@ else if (connection.getClientInfo != null) → clientInfo.m(command) ⇒ Command
 
 So:
 - **Modern JSON**: every `com.epic.communication.d` command named `Epic.Mobile.Core.*` — e.g. `Epic.Mobile.Core.PreLogin`, `Epic.Mobile.Core.Authentication.Login`, `Epic.Mobile.Core.Authentication.LoginWizard` (ECFLoginWizard), `Epic.Mobile.Core.Authentication.EpicOAuth2Login`, `Epic.Mobile.Core.CreateSession`, `Epic.Mobile.Core.KeepAlive`, `Epic.Mobile.Core.Logout`, `Epic.Mobile.Core.SearchRecords`, `Epic.Mobile.Core.GetPatientChecks`, `Epic.Mobile.Core.TerminateRemoteSession`, `Epic.Mobile.Core.SaveUserSettings`, `Epic.Mobile.Core.UploadLog`, `Epic.Mobile.Core.TrackFeatureUseMulti`, etc. (registry in `t60/i.<clinit>`, xref.
-- **Legacy SOAP**: every `q60.d` command whose name is a full EpicOnHand URN, e.g. `urn:epicsystems-com:EpicOnHand.2014.Services.Rover.MAR.RNVerify` (150 such URNs in the client string table; MAR/Rover, Lab, Flowsheets, InBasket, Login, PatientManager, OrderEntry, …). There is **no `SOAPAction` HTTP header and no `wsa:Action`** — the action is carried by the Body operation element's name + default namespace (see §3). The only `SOAPAction` string in the app is an unused library constant.
+- **Legacy SOAP**: every `q60.d` command whose name is a full EpicOnHand URN, e.g. `urn:epicsystems-com:EpicOnHand.2014.Services.Rover.MAR.RNVerify` (109 such operations across two namespaces, `EpicOnHand.*` and `Handheld.*`, cataloged in `catalog/soap-commands.txt`; MAR/Rover, Lab, Flowsheets, InBasket, Login, PatientManager, OrderEntry, …). There is **no `SOAPAction` HTTP header and no `wsa:Action`** — the action is carried by the Body operation element's name + default namespace (see §3). The only `SOAPAction` string in the app is an unused library constant.
 
 `t60/a.m(command)` (JSON side) additionally refuses to run any command when
 `serverInfo.versionIsAtLeast(executionInfo.u)` fails (default minimum `8.1`, set in `t60/a.f`), producing a local
@@ -417,10 +417,11 @@ Interconnect_ClientTime: Wed, 11 Nov 2026 14:00:00 GMT
  "openIDConnectCredential": { … } // OIDC path only
 }
 ```
- Password crypto (`session/a.n`): when a server RSA public key is present → random AES key + IV,
- password encrypted with AES (`com.epic.util.a.e`), key & IV RSA-encrypted with the server key
- (`com.epic.util.io.l.b(pk,"RSA")`), all base64 (`com.epic.util.d.b`); legacy fallback =
- MD5 hex of the password (`com.epic.util.h.f.h`).
+ Password crypto (exact construction in `auth-flow.md` "Password envelope"): random 16-byte
+ AES-128 key + 16-byte IV; `EncryptedPassword` = base64(AES-128-CBC/PKCS5Padding(UTF-8(password),
+ key, IV)); `EncryptedAESKey` = base64(RSA/ECB/OAEPwithSHA-1andMGF1Padding(key, server public key))
+ — **only the key is RSA-wrapped, the IV travels in the clear** as `PasswordIV`; legacy
+ fallback (no public key) = AES-128-CBC/PKCS5Padding with a fixed all-zero key and IV.
 - Pre-login (`Epic.Mobile.Core.Authentication.EpicOAuth2Login` → `internal/Auth/OAuth2/EPICOAUTH2LOGIN`)
  uses `EpicOAuth2Login$Request {}` (empty) and returns
  `{ "oAuth2Info": { "loginToken": "…", … } }` (`EpicOAuth2Login$Response`).

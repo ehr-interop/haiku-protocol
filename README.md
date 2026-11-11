@@ -18,6 +18,8 @@ building independent clients that speak the same protocol as the official app.
 | [docs/org-discovery.md](docs/org-discovery.md) | econfig provisioning pipeline, environment configuration model, capability negotiation |
 | [docs/security-webview-push.md](docs/security-webview-push.md) | TLS posture (no client pinning), Embedded Hyperspace WebView bridge, SignalR/FCM realtime channels |
 | [catalog/message-spec.json](catalog/message-spec.json) | Machine-usable message catalog: 2,851 command records, 15,963 typed members with wire names |
+| [docs/catalog-format.md](docs/catalog-format.md) | How to read the message catalog: record shape, wire-name derivation, type table, multipart/enum rules, data-quality caveats |
+| [catalog/soap-commands.txt](catalog/soap-commands.txt) | The 109 legacy SOAP operation URNs (`urn:epicsystems-com:{EpicOnHand|Handheld}.*`) |
 | [catalog/capability-list.txt](catalog/capability-list.txt) | The 388 server capability wire-values used for feature gating |
 
 ## The protocol in one paragraph
