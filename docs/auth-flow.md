@@ -52,6 +52,10 @@ type descriptors, reproduced verbatim).
  `Authentication.Login`, `TerminateRemoteSession`}; attaches `Authorization: t` (from `v(token,type)`)
  **only when `environment.w`** (only for OIDC-class environments). Login command is
  `com.epic.haiku.communication.session.d` (non-wizard variant).
+- Profile selection between `t60.i` and `t60.e`: `t60.i` (OAuth2/password wizard profile) is
+ built when the environment settings contain `RunWizardLogin` = `"1"` (`ha0.b.t` reads
+ `t60.h.e(env)`); otherwise `t60.e` (OIDC profile) is used. The `applicationId` argument
+ comes from `com.epic.android.f0.c()`.
 - Environment: `e10.g` — named server/environment; address (`g`),
  settings `HashMap` (keys like `LOGIN.REMEMBER_LAST_USER`, `HEADER.DISASSOCIATE_ON_LOGOUT`,
  `DESKTOP.HYPERSPACE_URL`), auth-type enum `e10.g$a` (values seen: `DEFAULT`, `OAUTH2`,
@@ -140,9 +144,11 @@ Decision tree in `h.beginWork`:
  (password + confirm + `PublicKey`).
  `ECFLogin$Request` = `LoginStartInfo`:
  - `LoginID`, `LoginIDType` (int), `ClientTime` (Date),
- - `ClientSecret` — the string passed through `t60/i` constructor (`clientSecret`, likely an
- app/installation secret from Haiku configuration); *uncertainty: exact semantics — this is the
- only place the field name appears; it is always.e(this.b), i.e. the connection-profile field.*
+ - `ClientSecret` — **resolved: the device `android_id`** — `Settings.Secure.getString(
+ resolver, "android_id")` (the 16-hex device identifier). Every login entry point seeds the
+ credential with it (`ha0.c.R(...)`, supplied by `z20.e.uC(context)` / the login activity)
+ before constructing the connection profile; the profile stores it (field `r`) and sends it
+ verbatim (`.e(this.b)` at request build time). Empty string when the id is unavailable.
  - `SelectedTemplateID`, (builder `.p(skipJobSelectionUpdateStatus)` on non-wizard path)
  - `EncryptedPassword`, `PasswordIV`, `EncryptedAESKey` — the password envelope, built when a
  password is present (exact construction below; password buffer zeroed afterwards),
@@ -381,15 +387,16 @@ and `INVALID-AUTH-TOKEN` → `NotAuthorized`; the client then surfaces re-authen
  register for a clone are `com.epic.haiku.oidc://callback` and the mobile.epic.com universal link.
 
 ## Uncertainty list
-1. Exact semantics and source of `clientSecret` (field `r` in `t60/i`, sent as `ECFLogin$Request.
- ClientSecret`) — presumably a Haiku app secret provisioned in configuration; not traced to its
- configuration source.
-2. `e10.g.q`/`w`/`z` exact enum/flag meanings (auth mode OAUTH2 vs OPENID_CONNECT etc.).
-3. SAML `ValidateSAMLAuth` request body and the exact handoff from `epic://SAML/redirect`.
-4. Consumption point of the MFL `GetMFLAuthCode` result (authCode) — which command/path it feeds.
-5. The precise container of `biometric_store` tokens (custom serializer vs EncryptedSharedPreferences).
-6. `t60/others` (e.g. `t60/o`, `t60/p`) and error-code enum `com.epic.communication.j` full mapping.
-7. Which header/cookie actually triggers MFL attempt on the workstation side
+
+*(Resolved since the last revision: `ClientSecret` = the device `android_id` — see the
+`ECFLogin$Request` field list above.)*
+
+1. `e10.g.q()`/`w()`/`z()` exact enum/flag meanings (auth mode OAUTH2 vs OPENID_CONNECT etc.).
+2. SAML `ValidateSAMLAuth` request body and the exact handoff from `epic://SAML/redirect`.
+3. Consumption point of the MFL `GetMFLAuthCode` result (authCode) — which command/path it feeds.
+4. The precise container of `biometric_store` tokens (custom serializer vs EncryptedSharedPreferences).
+5. `t60/others` (e.g. `t60/o`, `t60/p`) and error-code enum `com.epic.communication.j` full mapping.
+6. Which header/cookie actually triggers MFL attempt on the workstation side
  (`X-EpicMFL-CanAttempt` cookie was observed in the Haiku web container constructor).
-8. Wizard intermediate step payloads (EpicNative2FA prompt schema, OTP SMS/SignalR details) — the
+7. Wizard intermediate step payloads (EpicNative2FA prompt schema, OTP SMS/SignalR details) — the
  `QBA`/`OTPSMSDetails`/`OTPSignalRDetails` schemas were not traced.

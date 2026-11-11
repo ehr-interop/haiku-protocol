@@ -242,7 +242,8 @@ this.n = new URL(base, "httplistener.ashx"); // t60.a.s(URL)
 ```
 
 `Lt60.i` (pre-login processor) is constructed as `(e10.g environment, String clientSecret,
-String sessionId)` and its command allow-lists are:
+String sessionId)` — the `clientSecret` argument is the device `android_id`
+(`Settings.Secure.ANDROID_ID`), not a provisioned app secret and its command allow-lists are:
 
 ```java
 Z = { "Epic.Mobile.Core.PreLogin", "Epic.Mobile.Core.Authentication.Login",
