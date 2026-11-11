@@ -1,0 +1,15 @@
+haiku-protocol
+Copyright 2026 ehr-interop contributors. Licensed under the Apache License, Version 2.0.
+
+This repository contains independently created technical documentation of the
+client-server protocol used by Epic Haiku (an Epic Systems Corporation product),
+produced for the purpose of interoperability.
+
+This project is not affiliated with, endorsed by, or sponsored by Epic Systems
+Corporation. "Epic", "Epic Haiku", "Hyperspace", "MyChart" and related marks are
+trademarks of Epic Systems Corporation.
+
+No source code, binary, or asset of Epic Systems Corporation is included in this
+repository. All documents and tooling herein were written by the project
+contributors; class-name and field-name references appear solely as factual
+citations of observed program behavior.
